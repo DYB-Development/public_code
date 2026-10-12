@@ -30,4 +30,10 @@ class PublicCodeTest < ActiveSupport::TestCase
 
     assert_raises(ActiveRecord::RecordNotFound) { Report.where(name: "October").find_by_public_code!(report.code) }
   end
+
+  test "a record with a code is not found by an all-digit address" do
+    product = Product.create!(name: "Field guide")
+
+    assert_raises(ActiveRecord::RecordNotFound) { Product.find_by_public_code!(product.id.to_s) }
+  end
 end
