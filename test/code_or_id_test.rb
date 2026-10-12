@@ -10,4 +10,10 @@ class CodeOrIdTest < ActiveSupport::TestCase
 
     assert_equal flow.id.to_s, flow.to_param
   end
+
+  test "a record whose table has no code column yet is found by the id in its address" do
+    flow = Flow.create!(name: "Site visit")
+
+    assert_equal flow, Flow.find_by_public_code!(flow.to_param)
+  end
 end

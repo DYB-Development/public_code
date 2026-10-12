@@ -10,7 +10,7 @@ module PublicCode
         after_initialize :give_public_code, if: :new_record?
         before_create :give_public_code
         define_method(:to_param) { self.class.public_code_column? ? public_send(column) : super() }
-        define_singleton_method(:find_by_public_code!) { |code| find_by!(column => code) }
+        define_singleton_method(:find_by_public_code!) { |address| public_code_column? ? find_by!(column => address) : find(address) }
       end
     end
   end
