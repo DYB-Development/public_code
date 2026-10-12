@@ -24,4 +24,10 @@ class PublicCodeTest < ActiveSupport::TestCase
 
     assert_equal report, Report.find_by_public_code!(report.code)
   end
+
+  test "a record outside the records searched is not found by its code" do
+    report = Report.create!(name: "September")
+
+    assert_raises(ActiveRecord::RecordNotFound) { Report.where(name: "October").find_by_public_code!(report.code) }
+  end
 end
