@@ -10,6 +10,10 @@ ActiveRecord::Schema.define do
     t.index :public_code, unique: true
   end
 
+  create_table :flows do |t|
+    t.string :name
+  end
+
   create_table :reports do |t|
     t.string :name
     t.string :code

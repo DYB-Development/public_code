@@ -61,3 +61,50 @@ A column with its own name works the same way:
 ```ruby
 has_public_code :code
 ```
+
+## Codes are for addresses only
+
+A code replaces the id only where a person or an outside caller sees it: page
+addresses, API and MCP addresses, and links sent out. Records still point at
+each other by id, and a record's id never changes.
+
+## A gem whose records take codes in some apps first
+
+A gem declares the code on its model the same way:
+
+```ruby
+module EasyFlow
+  class Run < ApplicationRecord
+    has_public_code
+  end
+end
+```
+
+Until an app's table has the code column, a record is addressed and found by
+its id exactly as before, so a gem can release this without every app
+migrating at once. Once the table has the column, every address carries the
+code and an all-digit address is not found. Ship the migration that adds the
+column with the gem and name it in the gem's changelog.
+
+An app switches a gem's records to codes by copying and running that migration,
+then restarting so the new column is seen.
+
+## Checking pages for numbered links
+
+In an integration test:
+
+```ruby
+require "public_code/test_help"
+
+class ClientAddressesTest < ActionDispatch::IntegrationTest
+  include PublicCode::TestHelp
+
+  test "no client page links to a numbered address" do
+    assert_no_numbered_links([ "/home", "/products/#{product.public_code}" ], safe: [ "page" ])
+  end
+end
+```
+
+It fails when a link or form on any page has an all-digit path segment, or an
+all-digit query value whose name is not in `safe:`, and names each page and
+link. Links to other sites, asset files and stored files are not checked.

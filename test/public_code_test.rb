@@ -30,4 +30,19 @@ class PublicCodeTest < ActiveSupport::TestCase
 
     assert_raises(ActiveRecord::RecordNotFound) { Report.where(name: "October").find_by_public_code!(report.code) }
   end
+
+  test "a record with a code is not found by an all-digit address" do
+    product = Product.create!(name: "Field guide")
+
+    assert_raises(ActiveRecord::RecordNotFound) { Product.find_by_public_code!(product.id.to_s) }
+  end
+
+  test "a record is given its code when the app's secure token setting says, as before" do
+    was = ActiveRecord.generate_secure_token_on
+    ActiveRecord.generate_secure_token_on = :create
+
+    assert_nil Product.new(name: "Field guide").public_code
+  ensure
+    ActiveRecord.generate_secure_token_on = was
+  end
 end
