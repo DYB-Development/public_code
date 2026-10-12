@@ -1,5 +1,6 @@
 require "active_record"
 require "active_support"
+require "active_support/core_ext/securerandom"
 require "public_code/version"
 require "public_code/model"
 
