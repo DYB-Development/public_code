@@ -2,6 +2,16 @@ require "uri"
 
 module PublicCode
   module TestHelp
+    def assert_no_numbered_links(pages, safe: [])
+      found = pages.flat_map do |page|
+        get page
+        TestHelp.numbered_links(links_on_page, safe: safe).map { |link| "#{page} links to #{link}" }
+      end
+      assert found.empty?, ([ "Pages link to numbered addresses:" ] + found).join("\n")
+    end
+
+    def links_on_page = css_select("a[href], form[action]").map { |element| element["href"] || element["action"] }
+
     def self.numbered_links(addresses, safe: [])
       addresses.select do |address|
         next false unless own_page?(address)
