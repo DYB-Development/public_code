@@ -1,5 +1,6 @@
 require "test_helper"
 require "rake"
+require "minitest/mock"
 
 class StatusCoded < ActiveRecord::Base
   self.table_name = "products"
@@ -24,6 +25,13 @@ class StatusTaskTest < ActiveSupport::TestCase
     capture_io { Rake::Task["public_code:status"].invoke }.first
   end
 
+  def strict_failure
+    run_status
+    nil
+  rescue SystemExit => failure
+    failure.message
+  end
+
   test "the status task lists each model that declares a code and whether it is addressed by code or id" do
     assert_equal [ "StatusCoded addressed by code", "StatusUncoded addressed by id" ], run_status.lines.map(&:chomp).grep(/\AStatus/)
   end
@@ -32,5 +40,11 @@ class StatusTaskTest < ActiveSupport::TestCase
     ENV["STRICT"] = "1"
 
     assert_match(/StatusUncoded/, assert_raises(SystemExit) { run_status }.message)
+  end
+
+  test "in strict mode the status task passes when every model is addressed by code" do
+    ENV["STRICT"] = "1"
+
+    assert_nil(PublicCode.stub(:models, [ StatusCoded ]) { strict_failure })
   end
 end
