@@ -1,0 +1,21 @@
+scope: public codes — a random code in a record's addresses in place of its database id, the test that fails on numbered links, and the task that lists which models still use ids
+
+install:
+  - gem "public_code"
+  - PublicCode.generate
+  - bin/rails public_code:status
+
+develop:
+  - has_public_code
+  - find_by_public_code!
+  - record.regenerate_public_code
+  - PublicCode::TestHelp
+  - assert_no_numbered_links
+  - PublicCode::TestHelp.numbered_links
+
+sources:
+  - lib/public_code.rb
+  - lib/public_code/model.rb
+  - lib/public_code/test_help.rb
+  - lib/public_code/railtie.rb
+  - lib/tasks/public_code.rake

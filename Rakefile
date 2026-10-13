@@ -1,4 +1,5 @@
 require "rake/testtask"
+require "the_local/rake"
 
 Rake::TestTask.new(:test) do |t|
   t.libs << "test"

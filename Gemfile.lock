@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    public_code (0.3.0)
+    public_code (0.3.1)
       activerecord (>= 7.1)
       activesupport (>= 7.1)
 
@@ -90,6 +90,7 @@ GEM
     sqlite3 (2.9.6-x86_64-darwin)
     sqlite3 (2.9.6-x86_64-linux-gnu)
     sqlite3 (2.9.6-x86_64-linux-musl)
+    the_local (0.4.3)
     timeout (0.6.1)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
@@ -116,6 +117,7 @@ DEPENDENCIES
   rake
   rubocop-rails-omakase
   sqlite3
+  the_local (~> 0.4.3)
 
 BUNDLED WITH
    2.7.1

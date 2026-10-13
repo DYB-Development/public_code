@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-10-12
+
+### Added
+
+- Claude Code locals for public_code, which `the_local` installs into an app that uses the gem.
+
 ## [0.3.0] - 2026-10-12
 
 ### Added
