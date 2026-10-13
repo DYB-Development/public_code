@@ -4,6 +4,7 @@ module PublicCode
 
     class_methods do
       def has_public_code(column = :public_code)
+        PublicCode.models << self
         define_singleton_method(:public_code_column?) { table_exists? && column_names.include?(column.to_s) }
         define_method(:give_public_code) { self[column] ||= PublicCode.generate if self.class.public_code_column? }
         define_method(:"regenerate_#{column}") { update!(column => PublicCode.generate) }
