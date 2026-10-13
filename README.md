@@ -89,6 +89,19 @@ column with the gem and name it in the gem's changelog.
 An app switches a gem's records to codes by copying and running that migration,
 then restarting so the new column is seen.
 
+## Seeing which models still use ids
+
+In a Rails app:
+
+```
+bin/rails public_code:status
+```
+
+It lists every model that declares a code and says whether it is addressed by
+code or by id. With `STRICT=1` it fails when any model is still addressed by
+id, and names each one, so a deploy or CI step can require every migration to
+have run.
+
 ## Checking pages for numbered links
 
 In an integration test:
