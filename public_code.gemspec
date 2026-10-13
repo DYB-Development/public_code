@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 3.3.0"
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
-    Dir["lib/**/*", "LICENSE", "README.md", "CHANGELOG.md"]
+    Dir["lib/**/*", "the_local/**/*", "LICENSE", "README.md", "CHANGELOG.md"]
   end
 
   spec.add_dependency "activerecord", ">= 7.1"
