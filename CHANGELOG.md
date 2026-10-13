@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-12
+
+### Added
+
+- `bin/rails public_code:status` lists every model that declares a code and whether it is addressed by code or by id.
+- With `STRICT=1` the status task fails naming each model still addressed by id.
+
 ## [0.2.0] - 2026-10-12
 
 ### Added
